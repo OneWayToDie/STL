@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<array>
 using std::cin;
 using std::cout;
@@ -9,23 +9,23 @@ using std::endl;
 #define FACTORIAL
 
 
-// Структуры задействовал для передачи данных в функцию, которая помогает выискивать ошибки
+// РЎС‚СЂСѓРєС‚СѓСЂС‹ Р·Р°РґРµР№СЃС‚РІРѕРІР°Р» РґР»СЏ РїРµСЂРµРґР°С‡Рё РґР°РЅРЅС‹С… РІ С„СѓРЅРєС†РёСЋ, РєРѕС‚РѕСЂР°СЏ РїРѕРјРѕРіР°РµС‚ РІС‹РёСЃРєРёРІР°С‚СЊ РѕС€РёР±РєРё
 template<typename T>
 struct WrongFactorialNumberException
 {
 	T number;
 public:
-	WrongFactorialNumberException(T number) : number(number) {}	// Создал конструктор для возможности передачи number в функцию*
+	WrongFactorialNumberException(T number) : number(number) {}	// РЎРѕР·РґР°Р» РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё РїРµСЂРµРґР°С‡Рё number РІ С„СѓРЅРєС†РёСЋ*
 };
 
 template<typename T>T Factorial_Number()
 {
-	std::cin.exceptions(std::istream::failbit); // эта строчка нужна для поимки исключений на месте потока ввода
+	std::cin.exceptions(std::istream::failbit); // СЌС‚Р° СЃС‚СЂРѕС‡РєР° РЅСѓР¶РЅР° РґР»СЏ РїРѕРёРјРєРё РёСЃРєР»СЋС‡РµРЅРёР№ РЅР° РјРµСЃС‚Рµ РїРѕС‚РѕРєР° РІРІРѕРґР°
 	T number;
 	cin >> number;
 	if (number < 0 || number >= 17) 
 	{
-		throw WrongFactorialNumberException<int>(number);	//*применение number из struct
+		throw WrongFactorialNumberException<int>(number);	//*РїСЂРёРјРµРЅРµРЅРёРµ number РёР· struct
 	}
 	return number;
 }
@@ -50,7 +50,7 @@ void main()
 	setlocale(LC_ALL, "");
 
 #ifdef STL_ARRAY
-	//array - это контейнер, который хранит данные в виде статического массива;
+	//array - СЌС‚Рѕ РєРѕРЅС‚РµР№РЅРµСЂ, РєРѕС‚РѕСЂС‹Р№ С…СЂР°РЅРёС‚ РґР°РЅРЅС‹Рµ РІ РІРёРґРµ СЃС‚Р°С‚РёС‡РµСЃРєРѕРіРѕ РјР°СЃСЃРёРІР°;
 	throw;
 	const int n = 5;
 	std::array<int, n> arr;
@@ -88,22 +88,22 @@ void main()
 	int number;
 	try
 	{
-		cout << "Введите число, факториал которого хотите узнать - "; 
+		cout << "Р’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ, С„Р°РєС‚РѕСЂРёР°Р» РєРѕС‚РѕСЂРѕРіРѕ С…РѕС‚РёС‚Рµ СѓР·РЅР°С‚СЊ - "; 
 		number = Factorial_Number<int>(); cout << endl;
-		cout << "Факториал числа " << number << " = " << factorial(number) << endl;
-		cout << "Факториал числа " << number << " = " << Recursion_factorial(number) << endl;
+		cout << "Р¤Р°РєС‚РѕСЂРёР°Р» С‡РёСЃР»Р° " << number << " = " << factorial(number) << endl;
+		cout << "Р¤Р°РєС‚РѕСЂРёР°Р» С‡РёСЃР»Р° " << number << " = " << Recursion_factorial(number) << endl;
 	}
 	catch (const WrongFactorialNumberException<int>& I_dont_know)
 	{
-		std::cerr << "Число "<< I_dont_know.number << " не подходит условиям"  << endl;
+		std::cerr << "Р§РёСЃР»Рѕ "<< I_dont_know.number << " РЅРµ РїРѕРґС…РѕРґРёС‚ СѓСЃР»РѕРІРёСЏРј"  << endl;
 	}
 	catch (const std::exception& I_dont_know)
 	{
-		std::cerr << "Не удалось прочитать число по причине: " << I_dont_know.what() << endl;
+		std::cerr << "РќРµ СѓРґР°Р»РѕСЃСЊ РїСЂРѕС‡РёС‚Р°С‚СЊ С‡РёСЃР»Рѕ РїРѕ РїСЂРёС‡РёРЅРµ: " << I_dont_know.what() << endl;
 	}
 	catch (...)
 	{
-		std::cerr << "Неизвестная мне ошибка\n";
+		std::cerr << "РќРµРёР·РІРµСЃС‚РЅР°СЏ РјРЅРµ РѕС€РёР±РєР°\n";
 	}
 #endif // FACTORIAL
 }
