@@ -1,4 +1,5 @@
-﻿#include<iostream>
+﻿//Factorial_Find_Error_Through_Class
+#include<iostream>
 #include<array>
 using std::cin;
 using std::cout;
