@@ -131,8 +131,8 @@ template<typename T>T Recursion_factorial(T Number)
 	return Number * Recursion_factorial<T>(Number - 1);
 }
 
-#define FACTORIAL
-//#define Factorial_Array
+//#define FACTORIAL
+#define Factorial_Array
 
 int main()
 {
@@ -168,7 +168,7 @@ int main()
 	cout << "Введите массив: " << endl;
 	try
 	{
-		for (size_t i = 0; i < quantity; i++)
+		for (int i = 0; i < quantity; i++)
 		{
 			WrongFactorialNumberException<int> number(Factorial_Number<int>());
 			cout << "Факториал числа " << number << " = " << factorial(number.get_number()) << endl;

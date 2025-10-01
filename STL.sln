@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SequenceContainers", "Seque
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Factorial_cherez_class", "Factorial_cherez_class\Factorial_cherez_class.vcxproj", "{B16330C9-F1A0-4876-8DC1-125A0E7332D5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SequenceContainersCW", "SequenceContainersCW\SequenceContainersCW.vcxproj", "{E5003BE1-6C08-4DB3-B70B-8F2517FC5576}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{B16330C9-F1A0-4876-8DC1-125A0E7332D5}.Release|x64.Build.0 = Release|x64
 		{B16330C9-F1A0-4876-8DC1-125A0E7332D5}.Release|x86.ActiveCfg = Release|Win32
 		{B16330C9-F1A0-4876-8DC1-125A0E7332D5}.Release|x86.Build.0 = Release|Win32
+		{E5003BE1-6C08-4DB3-B70B-8F2517FC5576}.Debug|x64.ActiveCfg = Debug|x64
+		{E5003BE1-6C08-4DB3-B70B-8F2517FC5576}.Debug|x64.Build.0 = Debug|x64
+		{E5003BE1-6C08-4DB3-B70B-8F2517FC5576}.Debug|x86.ActiveCfg = Debug|Win32
+		{E5003BE1-6C08-4DB3-B70B-8F2517FC5576}.Debug|x86.Build.0 = Debug|Win32
+		{E5003BE1-6C08-4DB3-B70B-8F2517FC5576}.Release|x64.ActiveCfg = Release|x64
+		{E5003BE1-6C08-4DB3-B70B-8F2517FC5576}.Release|x64.Build.0 = Release|x64
+		{E5003BE1-6C08-4DB3-B70B-8F2517FC5576}.Release|x86.ActiveCfg = Release|Win32
+		{E5003BE1-6C08-4DB3-B70B-8F2517FC5576}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
