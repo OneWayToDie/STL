@@ -105,7 +105,7 @@ std::ostream& operator<<(std::ostream& os, const WrongFactorialNumberException<i
 template<typename T>
 T Factorial_Number()
 {
-	std::cin.exceptions(std::istream::failbit);
+	std::cin.exceptions(std::istream::failbit);	//// эта строчка нужна для поимки исключений на месте потока ввода
 	T number;
 	cin >> number;
 	if (number < 0 || number >= 17)
@@ -131,8 +131,8 @@ template<typename T>T Recursion_factorial(T Number)
 	return Number * Recursion_factorial<T>(Number - 1);
 }
 
-//#define FACTORIAL
-#define Factorial_Array
+#define FACTORIAL
+//#define Factorial_Array
 
 int main()
 {
