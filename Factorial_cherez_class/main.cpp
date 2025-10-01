@@ -4,10 +4,8 @@
 using std::cin;
 using std::cout;
 using std::endl;
+
 #define tab "\t"
-
-
-#define FACTORIAL
 
 template<typename T>
 class WrongFactorialNumberException
@@ -133,7 +131,10 @@ template<typename T>T Recursion_factorial(T Number)
 	return Number * Recursion_factorial<T>(Number - 1);
 }
 
-void main()
+//#define FACTORIAL
+#define Factorial_Array
+
+int main()
 {
 	setlocale(LC_ALL, "");
 #ifdef FACTORIAL
@@ -147,14 +148,49 @@ void main()
 	catch (const WrongFactorialNumberException<int>& ex)
 	{
 		std::cerr << "Число " << ex.get_number() << " не подходит условиям" << endl;
+		return 0;
 	}
 	catch (const std::exception& ex)
 	{
 		std::cerr << "Не удалось прочитать число по причине: " << ex.what() << endl;
+		return 0;
 	}
 	catch (...)
 	{
 		std::cerr << "Неизвестная ошибка\n";
+		return 0;
 	}
 #endif // FACTORIAL
+
+#ifdef Factorial_Array//(NET)
+	int quantity;
+	cout << "Введите количество чисел на проверку факториала: "; cin >> quantity;
+	cout << "Введите массив: " << endl;
+	try
+	{
+		for (size_t i = 0; i < quantity; i++)
+		{
+			WrongFactorialNumberException<int> number(Factorial_Number<int>());
+			cout << "Факториал числа " << number << " = " << factorial(number.get_number()) << endl;
+		}
+	}
+	catch (const WrongFactorialNumberException<int>& ex)
+	{
+		std::cerr << "Число " << ex.get_number() << " не подходит условиям" << endl;
+		system("PAUSE");
+		return main();
+	}
+	catch (const std::exception& ex)
+	{
+		std::cerr << "Не удалось прочитать число по причине: " << ex.what() << endl;
+		system("PAUSE");
+		return main();
+	}
+	catch (...)
+	{
+		std::cerr << "Неизвестная ошибка\n";
+		system("PAUSE");
+		return main();
+	}
+#endif // Factorial_through_Array
 }
