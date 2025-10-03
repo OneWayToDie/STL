@@ -183,6 +183,10 @@ void main()
 	for (int i : numbers)
 		std::cout << i << "\t";												//И опять всё вывожу на консоль
 	std::cout << std::endl;
+
+
+	//Почему cbegin без auto не работает?
+	//auto Iterator = numbers.cbegin();
 #endif // STL_FORWARD_LIST
 
 }
