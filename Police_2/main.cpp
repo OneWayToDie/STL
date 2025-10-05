@@ -156,7 +156,7 @@ void save_file()
 		fout << it->first << tab << it->second << endl;
 	}
 	fout.close();
-	//system("start notepad Police.txt");
+	system("start notepad Police.txt");
 }
 
 void load_file()
