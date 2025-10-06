@@ -81,34 +81,6 @@ void Call_Menu()
 			break;
 		}
 	} while (select != 7);
-	//if (select == 1)
-	//{
-	//	database(The_list_of_violators);
-	//}
-	//if (select == 2)
-	//{
-	//	add_violation(The_list_of_violators);
-	//}
-	//if (select == 3)
-	//{
-	//	find_car_number(The_list_of_violators);
-	//}
-	//if (select == 4)
-	//{
-	//	return range_of_number();
-	//}
-	//if (select == 5)
-	//{
-	//	return save_file();
-	//}
-	//if (select == 6)
-	//{
-	//	return load_file();
-	//}
-	//if (select != 1, 2, 3, 4, 5, 6)
-	//{
-	//	return exit;
-	//}
 }
 
 void database()
