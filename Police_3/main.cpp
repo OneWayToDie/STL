@@ -7,9 +7,6 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-#define HUMAN_TAKE_PARAMETERS const std::string& name, const std::string& second_name, int age, const std::string& criminal_record, const std::string& Date_of_birth,const std::string& Date_when_the_fine_was_fixed
-int  how_more_people;
-
 
 #define tab "\t"
 #define delimiter "\n----------------------------------------------------\n"
