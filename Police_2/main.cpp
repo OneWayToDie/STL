@@ -60,7 +60,7 @@ void Call_Menu()
 		switch (select)
 		{
 		case 1:
-			database();
+			database();			//Оператор свитч для перебора действий, вначал сделал через цикл, потом понял, что это был неправильный подход, через возврат функций в мэйн я обнулял свой результат, и получалось ,что база данных всегда пуста
 			break;
 		case 2:
 			add_violation();
@@ -95,6 +95,7 @@ void Call_Menu()
 
 void database()
 {
+	//Вывод базы данных на консоль, функция empty() - проверяет пустоту строки
 	if (The_list_of_violators.empty())
 	{
 		cout << "База данных отсутствует" << endl;
@@ -103,20 +104,22 @@ void database()
 		cout << "----------База Данных----------" << endl;
 	for (std::map<std::string, std::string>::iterator it = The_list_of_violators.begin(); it != The_list_of_violators.end(); ++it)
 	{
-		cout << it->first << tab << it->second << endl;
+		cout << it->first << tab << it->second << endl;	//цикл прохода по внесённым данным
 	}
 }
 void add_violation()
 {
+	//Ввод данных от руки
 	std::string number_car;		cout << "Введите номер машины:\t";	cin >> number_car;
 	std::string fine;			cout << "Причины выдачи штрафа:\t";	cin >> fine;
 
-	The_list_of_violators[number_car] = fine;
+	The_list_of_violators[number_car] = fine;	//Обращение по ключу, в моём случае - по номеру машины
 
 	std::cout << "База данных пополнена\n";
 }
 void add_several_violation()
 {
+	//Запрос на выдачу нескольких штрафов, используя цикл и уже имеющуюся функцию ввода ОДНОГО штрафа
 	int count; cout << "Сколько штрафов хотите выписать?" << endl; 
 	cout << "Хочу выписать: ";cin >> count; 
 	cout << endl;
@@ -127,6 +130,7 @@ void add_several_violation()
 }
 void delete_violation()
 {
+	//Функция для удаления штрафов по номеру
 	std::string number_car;
 	cout << "Введите номр машины, который хотите удалить из штрафного списка:\t"; cin >> number_car;
 	if (The_list_of_violators.erase(number_car))
@@ -136,6 +140,7 @@ void delete_violation()
 }
 void find_car_number()
 {
+	//Поиск по номеру машины среди введённых в базу данных номеров
 	std::string number_car;
 	cout << "Введите номер для поиска:\t";cin >> number_car;
 
@@ -152,11 +157,12 @@ void find_car_number()
 
 void range_of_number()
 {
-
+	//не реализовано, хз как надо
 }
 
 void save_file()
 {
+	//Сохранение базы данных в txt формат
 	std::ofstream fout("Police.txt"/*, std::ios_base::app*/);
 	for (std::map<std::string, std::string>::iterator it = The_list_of_violators.begin(); it != The_list_of_violators.end(); ++it)
 	{
@@ -169,6 +175,7 @@ void save_file()
 
 void load_file()
 {
+	//Загрузка базы данных из уже имеющегося файла
 	std::ifstream fin("Police.txt");
 	if (fin.is_open())
 	{
@@ -181,12 +188,13 @@ void load_file()
 	}
 	else
 	{
-		std::cerr << "Error: File not found" << endl;
+		std::cerr << "Ошибка: файл не обнаружен" << endl;
 	}
 	fin.close();
 }
 void clear_file()
 {
+	//Полная очистка базы данных, выгрузка из имеющегося файла, удаление и сохранение пустого файла
 	load_file();
 	The_list_of_violators.clear();
 	save_file();
