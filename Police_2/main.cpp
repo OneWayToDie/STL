@@ -11,7 +11,7 @@ using std::endl;
 #define tab "\t"
 #define delimiter "\n----------------------------------------------------\n"
 
-std::map<std::string, std::string> The_list_of_violators;
+std::map<std::string, std::string> The_list_of_violators;	//Вынес в заголовочную часть кода, чтобы функции могли прям так считывать
 void Menu();
 void Call_Menu();
 void database();
