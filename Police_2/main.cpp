@@ -1,4 +1,4 @@
-#include<iostream>
+ï»¿#include<iostream>
 #include<map>
 #include<fstream>
 #include<list>
@@ -16,6 +16,7 @@ void Menu();
 void Call_Menu();
 void database();
 void add_violation();
+void delete_violation();
 void find_car_number();
 void range_of_number();
 void save_file();
@@ -34,14 +35,15 @@ void main()
 
 void Menu()
 {
-	cout << "					Áàçà Äàííûõ ÃÀÈ			" << endl;
-	cout << "1) Ïîêàçàòü áàçó äàííûõ" << endl;
-	cout << "2) Äîáàâèòü ïðàâîíàðóøåíèå" << endl;
-	cout << "3) Íàéòè ïî íîìåðó àâòîìîáèëÿ" << endl;
-	cout << "4) ïîèñê ïî äèàïàçîíó íîìåðîâ" << endl;
-	cout << "5) Ñîõðàíèòü" << endl;
-	cout << "6) Çàãðóçèòü ôàéë" << endl;
-	cout << "7) Âûõîä" << endl;
+	cout << "					Ð‘Ð°Ð·Ð° Ð”Ð°Ð½Ð½Ñ‹Ñ… Ð“ÐÐ˜			" << endl;
+	cout << "1) ÐŸÐ¾ÐºÐ°Ð·Ð°Ñ‚ÑŒ Ð±Ð°Ð·Ñƒ Ð´Ð°Ð½Ð½Ñ‹Ñ…" << endl;
+	cout << "2) Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð°Ð²Ð¾Ð½Ð°Ñ€ÑƒÑˆÐµÐ½Ð¸Ðµ" << endl;
+	cout << "3) Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð°Ð²Ð¾Ð½Ð°Ñ€ÑƒÑˆÐµÐ½Ð¸Ðµ" << endl;
+	cout << "4) ÐÐ°Ð¹Ñ‚Ð¸ Ð¿Ð¾ Ð½Ð¾Ð¼ÐµÑ€Ñƒ Ð°Ð²Ñ‚Ð¾Ð¼Ð¾Ð±Ð¸Ð»Ñ" << endl;
+	cout << "5) Ð¿Ð¾Ð¸ÑÐº Ð¿Ð¾ Ð´Ð¸Ð°Ð¿Ð°Ð·Ð¾Ð½Ñƒ Ð½Ð¾Ð¼ÐµÑ€Ð¾Ð²" << endl;
+	cout << "6) Ð¡Ð¾Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ÑŒ" << endl;
+	cout << "7) Ð—Ð°Ð³Ñ€ÑƒÐ·Ð¸Ñ‚ÑŒ Ñ„Ð°Ð¹Ð»" << endl;
+	cout << "8) Ð’Ñ‹Ñ…Ð¾Ð´" << endl;
 }
 
 void Call_Menu()
@@ -50,7 +52,7 @@ void Call_Menu()
 	do
 	{
 		Menu();
-		cout << "Âûáåðèòå äåéñòâèå:\t"; cin >> select;
+		cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ Ð´ÐµÐ¹ÑÑ‚Ð²Ð¸Ðµ:\t"; cin >> select;
 		switch (select)
 		{
 		case 1:
@@ -60,19 +62,22 @@ void Call_Menu()
 			add_violation();
 			break;
 		case 3:
-			find_car_number();
+			delete_violation();
 			break;
 		case 4:
-			range_of_number();
+			find_car_number();
 			break;
 		case 5:
-			save_file();
+			range_of_number();
 			break;
 		case 6:
-			load_file();
+			save_file();
 			break;
 		case 7:
-			cout << "Âûõîä èç ïðîãðàììû" << endl;
+			load_file();
+			break;
+		case 8:
+			cout << "Ð’Ñ‹Ñ…Ð¾Ð´ Ð¸Ð· Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹" << endl;
 			break;
 		}
 	} while (select != 7);
@@ -110,10 +115,10 @@ void database()
 {
 	if (The_list_of_violators.empty())
 	{
-		cout << "Áàçà äàííûõ îòñóòñòâóåò" << endl;
+		cout << "Ð‘Ð°Ð·Ð° Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¾Ñ‚ÑÑƒÑ‚ÑÑ‚Ð²ÑƒÐµÑ‚" << endl;
 	}
 	else
-		cout << "----------Áàçà Äàííûõ----------" << endl;
+		cout << "----------Ð‘Ð°Ð·Ð° Ð”Ð°Ð½Ð½Ñ‹Ñ…----------" << endl;
 	for (std::map<std::string, std::string>::iterator it = The_list_of_violators.begin(); it != The_list_of_violators.end(); ++it)
 	{
 		cout << it->first << tab << it->second << endl;
@@ -121,24 +126,35 @@ void database()
 }
 void add_violation()
 {
-	std::string number_car;		cout << "Ââåäèòå íîìåð ìàøèíû:\t";	cin >> number_car;
-	std::string fine;			cout << "Ïðè÷èíû âûäà÷è øòðàôà:\t";	cin >> fine;
+	std::string number_car;		cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ Ð¼Ð°ÑˆÐ¸Ð½Ñ‹:\t";	cin >> number_car;
+	std::string fine;			cout << "ÐŸÑ€Ð¸Ñ‡Ð¸Ð½Ñ‹ Ð²Ñ‹Ð´Ð°Ñ‡Ð¸ ÑˆÑ‚Ñ€Ð°Ñ„Ð°:\t";	cin >> fine;
+
 	The_list_of_violators[number_car] = fine;
-	std::cout << "Áàçà äàííûõ ïîïîëíåíà\n";
+
+	std::cout << "Ð‘Ð°Ð·Ð° Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ð¾Ð¿Ð¾Ð»Ð½ÐµÐ½Ð°\n";
+}
+void delete_violation()
+{
+	std::string number_car;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼Ñ€ Ð¼Ð°ÑˆÐ¸Ð½Ñ‹, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¹ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ ÑƒÐ´Ð°Ð»Ð¸Ñ‚ÑŒ Ð¸Ð· ÑˆÑ‚Ñ€Ð°Ñ„Ð½Ð¾Ð³Ð¾ ÑÐ¿Ð¸ÑÐºÐ°:\t"; cin >> number_car;
+	if (The_list_of_violators.erase(number_car))
+		cout << "ÐÐ¾Ð¼ÐµÑ€: " << number_car << " - Ð±Ñ‹Ð» ÑƒÐ´Ð°Ð»Ñ‘Ð½" << endl;
+	else
+		cout << "Ð¢Ð°ÐºÐ¾Ð¹ Ð½Ð¾Ð¼ÐµÑ€ " << number_car << " Ð½Ðµ Ð±Ñ‹Ð» Ð²Ð½ÐµÑÑ‘Ð½ Ð² Ð±Ð°Ð·Ñƒ Ð´Ð°Ð½Ð½Ñ‹Ñ…";
 }
 void find_car_number()
 {
 	std::string number_car;
-	cout << "Ââåäèòå íîìåð äëÿ ïîèñêà:\t";cin >> number_car;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ Ð´Ð»Ñ Ð¿Ð¾Ð¸ÑÐºÐ°:\t";cin >> number_car;
 
 	std::map<std::string, std::string>::iterator it = The_list_of_violators.find(number_car);
 	if (it != The_list_of_violators.end())
 	{
-		cout << "Íàéäåí íîìåð: " << it->first << ", øòðàô: " << it->second << endl;
+		cout << "ÐÐ°Ð¹Ð´ÐµÐ½ Ð½Ð¾Ð¼ÐµÑ€: " << it->first << ", ÑˆÑ‚Ñ€Ð°Ñ„: " << it->second << endl;
 	}
 	else
 	{
-		cout << "Òàêîé íîìåð íå óêàçàí â áàçå äàííûõ" << endl;
+		cout << "Ð¢Ð°ÐºÐ¾Ð¹ Ð½Ð¾Ð¼ÐµÑ€ Ð½Ðµ ÑƒÐºÐ°Ð·Ð°Ð½ Ð² Ð±Ð°Ð·Ðµ Ð´Ð°Ð½Ð½Ñ‹Ñ…" << endl;
 	}
 }
 
