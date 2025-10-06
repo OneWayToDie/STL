@@ -22,6 +22,7 @@ void find_car_number();
 void range_of_number();
 void save_file();
 void load_file();
+void clear_file();
 
 #define POLICE
 
@@ -45,7 +46,8 @@ void Menu()
 	cout << "6) поиск по диапазону номеров" << endl;
 	cout << "7) Сохранить" << endl;
 	cout << "8) Загрузить файл" << endl;
-	cout << "9) Выход" << endl;
+	cout << "9) Полная очистка файла" << endl;
+	cout << "10) Выход" << endl;
 }
 
 void Call_Menu()
@@ -82,10 +84,13 @@ void Call_Menu()
 			load_file();
 			break;
 		case 9:
+			clear_file();
+			break;
+		case 10:
 			cout << "Выход из программы" << endl;
 			break;
 		}
-	} while (select != 9);
+	} while (select != 10);
 }
 
 void database()
@@ -179,4 +184,10 @@ void load_file()
 		std::cerr << "Error: File not found" << endl;
 	}
 	fin.close();
+}
+void clear_file()
+{
+	load_file();
+	The_list_of_violators.clear();
+	save_file();
 }
