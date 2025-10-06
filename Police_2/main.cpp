@@ -16,6 +16,7 @@ void Menu();
 void Call_Menu();
 void database();
 void add_violation();
+void add_several_violation();
 void delete_violation();
 void find_car_number();
 void range_of_number();
@@ -37,13 +38,14 @@ void Menu()
 {
 	cout << "					База Данных ГАИ			" << endl;
 	cout << "1) Показать базу данных" << endl;
-	cout << "2) Добавить правонарушение" << endl;
-	cout << "3) Удалить правонарушение" << endl;
-	cout << "4) Найти по номеру автомобиля" << endl;
-	cout << "5) поиск по диапазону номеров" << endl;
-	cout << "6) Сохранить" << endl;
-	cout << "7) Загрузить файл" << endl;
-	cout << "8) Выход" << endl;
+	cout << "2) Добавить штраф" << endl;
+	cout << "3) Добавить несколько штрафов" << endl;
+	cout << "4) Удалить штраф" << endl;
+	cout << "5) Найти по номеру автомобиля" << endl;
+	cout << "6) поиск по диапазону номеров" << endl;
+	cout << "7) Сохранить" << endl;
+	cout << "8) Загрузить файл" << endl;
+	cout << "9) Выход" << endl;
 }
 
 void Call_Menu()
@@ -62,25 +64,28 @@ void Call_Menu()
 			add_violation();
 			break;
 		case 3:
-			delete_violation();
+			add_several_violation();
 			break;
 		case 4:
-			find_car_number();
+			delete_violation();
 			break;
 		case 5:
-			range_of_number();
+			find_car_number();
 			break;
 		case 6:
-			save_file();
+			range_of_number();
 			break;
 		case 7:
-			load_file();
+			save_file();
 			break;
 		case 8:
+			load_file();
+			break;
+		case 9:
 			cout << "Выход из программы" << endl;
 			break;
 		}
-	} while (select != 7);
+	} while (select != 9);
 }
 
 void database()
@@ -104,6 +109,16 @@ void add_violation()
 	The_list_of_violators[number_car] = fine;
 
 	std::cout << "База данных пополнена\n";
+}
+void add_several_violation()
+{
+	int count; cout << "Сколько штрафов хотите выписать?" << endl; 
+	cout << "Хочу выписать: ";cin >> count; cout << endl;
+
+	for (int i = 0; i < count; ++i)
+	{
+		add_violation();
+	}
 }
 void delete_violation()
 {
