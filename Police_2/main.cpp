@@ -113,8 +113,8 @@ void add_violation()
 void add_several_violation()
 {
 	int count; cout << "Сколько штрафов хотите выписать?" << endl; 
-	cout << "Хочу выписать: ";cin >> count; cout << endl;
-
+	cout << "Хочу выписать: ";cin >> count; 
+	cout << endl;
 	for (int i = 0; i < count; ++i)
 	{
 		add_violation();
