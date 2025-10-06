@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<map>
 #include<list>
 #include<set>
@@ -7,134 +7,109 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-
 #define tab "\t"
 #define delimiter "\n----------------------------------------------------\n"
 
-template<typename T>T list();
+#define POLICE
 
+const std::map<int, std::string> VIOLATIONS =
+{
+	{0, "N/A"},
+	{1, "РџР°СЂРєРѕРІРєР° РІ РЅРµРїРѕР»РѕР¶РµРЅРЅРѕРј РјРµСЃС‚Рµ"},
+	{2, "РќРµРїСЂРёСЃС‚С‘РіРЅСѓС‚С‹Р№ СЂРµРјРµРЅСЊ Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё"},
+	{3, "РџРµСЂРµСЃРµС‡РµРЅРёРµ СЃРїР»РѕС€РЅРѕР№"},
+	{4, "РџСЂРµРІС‹С€РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё"},
+	{5, "РџСЂРѕРµР·Рґ РЅР° РєСЂР°СЃРЅС‹Р№"},
+	{6, "Р’С‹РµР·Рґ РЅР° РІСЃС‚СЂРµС‡РЅСѓСЋ РїРѕР»РѕСЃСѓ"},
+	{7, "Р•Р·РґР° РІ РЅРµС‚СЂРµР·РІРѕРј СЃРѕСЃС‚РѕСЏРЅРёРё"},
+	{8, "РћСЃРєРѕСЂР±Р»РµРЅРёРµ РѕС„РёС†РµСЂР°"},
+};
 
-//Сделал два класса без делегирования, потому что не знаю как их реализовать в std::map по другому, один передаёт номер машины, которая получила штраф, в другой передаёт штрафные санкции/причину штрафа
-//template<typename T>
-//class number
-//{
-//	T car_number;
-//public:
-//	T get_car_number()const
-//	{
-//		return car_number;
-//	}
-//	void set_car_number(T car_number)
-//	{
-//		this->car_number = car_number;
-//	}
-//	number(T car_number)
-//	{
-//		set_car_number(car_number);
-//	}
-//	virtual ~number() {};
-//	virtual std::ostream& info(std::ostream& os)const
-//	{
-//		return os << "Номер машины - " << car_number << "  ";
-//	}
-//	bool operator<(const number& other)const 
-//	{
-//		return this->car_number < other.car_number;
-//	}
-//};
-//
-//
-//std::ostream& operator<<(std::ostream& os, const number<std::string>& obj)
-//{
-//	return obj.info(os);
-//}
-//
-//template<typename T>
-//class criminalitet/* :public number*/
-//{
-//	T violation;
-//public:
-//	const T get_violation()const
-//	{
-//		return violation;
-//	}
-//	void set_violation(T violation)
-//	{
-//		this->violation = violation;
-//	}
-//	criminalitet(T violation/*, int car_number*/) /*:number(car_number)*/
-//	{
-//		set_violation(violation);
-//	}
-//	~criminalitet() {};
-//	virtual std::ostream& info(std::ostream& os)const /*override*/
-//	{
-//		return os/*number::info(os) <<*/ << "Список нарушений: " << violation << "  ";
-//	}
-//};
-//
-//std::ostream& operator<<(std::ostream& os, const criminalitet<std::string>& obj)
-//{
-//	return obj.info(os);
-//}
+class Crime
+{
+	int violation;
+	std::string place;
+public:
+	int get_violation()const
+	{
+		return violation;
+	}
+	const std::string& get_place()const
+	{
+		return place;
+	}
+	void set_violation(int violation)
+	{
+		this->violation = violation;
+	}
+	void set_place(const std::string& place)
+	{
+		this->place = place;
+	}
+	Crime(int violation, const std::string& place)
+	{
+		set_violation(violation);
+		set_place(place);
+	}
+};
+std::ostream& operator<<(std::ostream& os, const Crime& obj)
+{
+	os.width(32);
+	os << std::left;
+	return os << VIOLATIONS.at(obj.get_violation()) << "\t" << obj.get_place();
+}
 
-//#define POLICE
+void print(const std::map<std::string, std::list<Crime>>& base);
+void save(const std::map<std::string, std::list<Crime>>& base, const std::string& filename);
 
 void main()
 {
 	setlocale(LC_ALL, "");
 
 #ifdef POLICE
-	//number<std::string> number_car(number_of_fool);
-	std::string number_of_fool;
-	cout << "Введите номер машины: "; cin >> number_of_fool;
-	std::string delinquent = list<std::string>();
-	//std::string criminal = list<std::string>();
-	//int again;
-	//cout << "Хотите ещё выписать на чей-то номер штраф? нажмите \"1\", если хотите продолжить, и любую другую цифру, если хотите выйти:\t"; cin >> again;
 
-	std::ofstream fout("Police.txt", std::ios_base::app);
-	std::map<std::string, std::string> The_list_of_fools;
-	//do {
-	//		The_list_of_fools[number_of_fool] = delinquent;
-	//	} while (again == 1);
-	for (int i = 0; i < 1000; i++)
+	std::map<std::string, std::list<Crime>> base =
 	{
-		int again;
-			cout << "Хотите ещё выписать на чей-то номер штраф? нажмите \"1\", если хотите продолжить, и любую другую цифру, если хотите выйти:\t"; cin >> again;
-			if (again == 1)
-			{
-				The_list_of_fools[number_of_fool] = delinquent;
-			}
-			else
-			{
-				i = 999;
-			}
-	}
-	for (std::map<std::string, std::string>::iterator it = The_list_of_fools.begin(); it != The_list_of_fools.end(); ++it)
-	{
-		cout << it->first << tab << it->second << endl;
-		fout << it->first << tab << it->second << endl;
-	}
-	fout.close();
-	system("start notepad Police.txt");
-
+		{"Рђ777РђРђ", {Crime(4, "РЈР». Р›РµРЅРёРЅР°"), Crime(5, "РЈР». Р›РµРЅРёРЅР°"), Crime(7, "РЈР». Р­РЅС‚СѓР·РёР°СЃС‚РѕРІ"), Crime(8, "РЈР». Р­РЅС‚СѓР·РёР°СЃС‚РѕРІ") } },
+		{"a123bb", {Crime(2, "РЈР». РџСЂРѕР»РµС‚Р°СЂСЃРєР°СЏ"), Crime(3, "РЈР». Р’Р°С‚СѓС‚РёРЅР°") } },
+		{"a001eg", {Crime(5, "РЈР».РѕРєС‚СЏР±СЂСЊСЃРєР°СЏ"),Crime(5, "РЈР».РѕРєС‚СЏР±СЂСЊСЃРєР°СЏ"), Crime(7, "РЈР».РљРѕСЃРјРёС‡РµСЃРєР°СЏ"), Crime(8, "РЈР».Р­РЅС‚СѓР·РёР°СЃС‚РѕРІ") } }
+	};
+	print(base);
+	save(base, "base.txt");
 #endif	//POLICE
 
 }
 
-template<typename T>T list()
+
+void print(const std::map<std::string, std::list<Crime>>& base)
 {
-	T criminal;
-	cout << "Введите причину штрафа: "; cin >> criminal;
-	bool true_false;
-	cout << "Это всё, или ещё есть штрафные санкции? \nВведите \"1\" если хотите продолжить вводить нарушения, и любую другую цифру если хотите закончить:\t"; cin >> true_false;
-	if (true_false == 1)
+	for (std::map<std::string, std::list<Crime>>::const_iterator plate = base.begin(); plate != base.end(); ++plate)
 	{
-		return list<T>();
+		cout << plate->first << ":\n";
+		for (std::list<Crime>::const_iterator violation = plate->second.begin(); violation != plate->second.end(); ++violation)
+		{
+			cout << "\t" << *violation << endl;
+		}
+		cout << delimiter << endl;
 	}
-	else
+}
+
+void save(const std::map<std::string, std::list<Crime>>& base, const std::string& filename)
+{
+	std::ofstream fout(filename/*, std::ios_base::app*/);
+	for (std::map<std::string, std::list<Crime>>::const_iterator plate = base.begin(); plate != base.end(); ++plate)
 	{
-		return criminal;
+		cout << plate->first << ":\n";
+		for (std::list<Crime>::const_iterator violation = plate->second.begin(); violation != plate->second.end(); ++violation)
+		{
+			fout << "\t" << *violation << endl;
+		}
+		fout << delimiter << endl;
 	}
+	fout.close();
+	std::string cmd = "notepad ";
+	cmd += filename;
+	system(cmd.c_str());
+	cout << "Р”Р°РЅРЅС‹Рµ СЃРѕС…СЂР°РЅРµРЅС‹ РІ С„Р°Р№Р» base.txt" << endl;
+	/*system("start notepad Police.txt");*/
 }

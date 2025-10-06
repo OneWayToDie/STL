@@ -1,6 +1,7 @@
 //AssociativeContainers
 #include<iostream>
 #include<map>
+#include<set>
 #include<list>
 using std::cin;
 using std::cout;
@@ -9,8 +10,10 @@ using std::endl;
 #define tab "\t"
 #define delimiter "\n----------------------------------------------------\n"
 
+//#define STL_MAP
+#define SET_MAP
 
-#define STL_MAP
+
 
 void main()
 {
@@ -77,17 +80,53 @@ void main()
 		{"sequence", {"последовательность", "р€д", "эпизод", "череда"}},
 		{"consequence", {"последствие", "следствие", "вывод", "череда"}},
 	};
-	for (std::map<std::string, std::list<std::string>>::iterator it = dictionary.begin(); it != dictionary.end(); ++it)
+	//for (std::map<std::string, std::list<std::string>>::iterator it = dictionary.begin(); it != dictionary.end(); ++it)
+	//{
+	//	cout << it->first << ":   \t"/* << endl*/;
+	//	for (const std::string& translation : it->second)
+	//	{
+	//		//cout << "\t- " << translation << endl;
+	//		cout << "-" << translation << "   ";
+	//	}
+	//	cout << /*endl*/"\n\n";
+	//}
+	
+	//for (std::map<std::string, std::list<std::string>>::iterator it = dictionary.begin(); it != dictionary.end(); ++it)
+	//{
+	//	cout.width(15);
+	//	cout << it->first + ":";
+	//	for (std::list<std::string>::iterator word = it->second.begin(); word != it->second.end(); ++word)
+	//	{
+	//		cout << *word;
+	//		cout << (word == --it->second.end() ? ";" : ",   ");
+	//	}
+	//	cout << endl;
+	//}
+
+	for (std::pair<std::string, std::list<std::string>> i : dictionary)
 	{
-		cout << it->first << ":   \t"/* << endl*/;
-		for (const std::string& translation : it->second)
+		cout.width(15);
+		cout << i.first + ":";
+		int count = 0;
+		for (std::string word : i.second)
 		{
-			//cout << "\t- " << translation << endl;
-			cout << "-" << translation << "   ";
+			cout << word << (++count < i.second.size() ? ",  " : ";");
 		}
-		cout << /*endl*/"\n\n";
+		cout << endl;
 	}
 #endif
+
+#ifdef SET_MAP
+	//set - контейнер, который хранит данные в виде бинарного дерева поиска
+	// ¬ отличии от map, каждым элементом set €вл€етс€ одно значение, но
+	//„асто говор€т, что set совмещает ключ и  значение.
+	std::set<int> set = { 1024, 512, 2048, 128, 3072, 768 };
+	for (std::set<int>::iterator it = set.begin(); it != set.end(); ++it)
+	{
+		cout << *it << tab;
+	}
+	cout << endl;
+#endif // SET_MAP
 
 }
 
