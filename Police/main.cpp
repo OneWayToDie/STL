@@ -3,6 +3,8 @@
 #include<list>
 #include<set>
 #include<fstream>
+#include<string>
+#include<sstream>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -10,7 +12,7 @@ using std::endl;
 #define tab "\t"
 #define delimiter "\n----------------------------------------------------\n"
 
-#define POLICE
+
 
 const std::map<int, std::string> VIOLATIONS =
 {
@@ -58,26 +60,46 @@ std::ostream& operator<<(std::ostream& os, const Crime& obj)
 	os << std::left;
 	return os << VIOLATIONS.at(obj.get_violation()) << "\t" << obj.get_place();
 }
+std::ofstream& operator<<(std::ofstream& ofs, const Crime& obj)
+{
+	ofs << obj.get_violation() << " " << obj.get_place();
+	return ofs;
+}
+std::stringstream& operator>>(std::stringstream& stream, Crime& obj)
+{
+	int violation;
+	stream >> violation;
+	std::string place;
+	std::getline(stream, place);
+	obj.set_violation(violation);
+	obj.set_place(place);
+	return stream;
+}
+
 
 void print(const std::map<std::string, std::list<Crime>>& base);
 void save(const std::map<std::string, std::list<Crime>>& base, const std::string& filename);
+std::map<std::string, std::list<Crime>> load(const std::string& filename);
+
+//#define INIT_BASE
 
 void main()
 {
 	setlocale(LC_ALL, "");
 
-#ifdef POLICE
-
+#ifdef INIT_BASE
 	std::map<std::string, std::list<Crime>> base =
 	{
 		{"А777АА", {Crime(4, "Ул. Ленина"), Crime(5, "Ул. Ленина"), Crime(7, "Ул. Энтузиастов"), Crime(8, "Ул. Энтузиастов") } },
 		{"a123bb", {Crime(2, "Ул. Пролетарская"), Crime(3, "Ул. Ватутина") } },
-		{"a001eg", {Crime(5, "Ул.октябрьская"),Crime(5, "Ул.октябрьская"), Crime(7, "Ул.Космическая"), Crime(8, "Ул.Энтузиастов") } }
+		{"a001eg", {Crime(5, "Ул. Октябрьская"),Crime(5, "Ул. Октябрьская"), Crime(7, "Ул.Космическая"), Crime(8, "Ул.Энтузиастов") } }
 	};
 	print(base);
 	save(base, "base.txt");
-#endif	//POLICE
+#endif	//INIT_BASE
 
+	std::map<std::string, std::list<Crime>> base = load("base.txt");
+	print(base);
 }
 
 
@@ -99,12 +121,12 @@ void save(const std::map<std::string, std::list<Crime>>& base, const std::string
 	std::ofstream fout(filename/*, std::ios_base::app*/);
 	for (std::map<std::string, std::list<Crime>>::const_iterator plate = base.begin(); plate != base.end(); ++plate)
 	{
-		cout << plate->first << ":\n";
+		fout << plate->first << ":";
 		for (std::list<Crime>::const_iterator violation = plate->second.begin(); violation != plate->second.end(); ++violation)
 		{
-			fout << "\t" << *violation << endl;
+			fout << *violation << ",";
 		}
-		fout << delimiter << endl;
+		fout << endl;
 	}
 	fout.close();
 	std::string cmd = "notepad ";
@@ -112,4 +134,38 @@ void save(const std::map<std::string, std::list<Crime>>& base, const std::string
 	system(cmd.c_str());
 	cout << "Данные сохранены в файл base.txt" << endl;
 	/*system("start notepad Police.txt");*/
+}
+
+std::map<std::string, std::list<Crime>> load(const std::string& filename)
+{
+	std::map<std::string, std::list<Crime>> base;
+	std::ifstream fin(filename);
+	if (fin.is_open())
+	{
+		while (!fin.eof())
+		{
+			std::string licence_plate;
+			std::getline(fin, licence_plate, ':');
+			cout << licence_plate << "\t";
+			const int SIZE = 1024 * 512;
+			char all_crimes[SIZE];
+			fin.getline(all_crimes, SIZE);
+			cout << all_crimes << endl;
+			const char delimiters[] = ",";
+			for (char* pch = strtok(all_crimes, delimiters); pch; pch = strtok(NULL, delimiters))
+			{
+				Crime crime(0, "");
+				std::stringstream stream(pch);	//stringstream - это объект, который хранит строку, но позволяет работать с ней как с потоком, 
+				//а именно из строки можно читать её личные элементы, используя операторы перенаправления в поток, и потоковую функцию getline
+				stream >> crime;
+				base[licence_plate].push_back(crime);
+			}
+		}
+	}
+	else
+	{
+		std::cerr << "Error: File not found" << endl;
+	}
+	fin.close();
+	return base;
 }
