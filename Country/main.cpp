@@ -1,4 +1,4 @@
-#include"stdafx.h"
+п»ї#include"stdafx.h"
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////								Initializations							  /////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,12 +24,12 @@ void clear_database();
 ///////////////////////////////////////////////////////////////////////////////////////////////
 const std::map<int, std::string> Continent =
 {
-	{0, "Евразия"},
-	{1, "Африка"},
-	{2, "Северная Америка"},
-	{3, "Южная Америка"},
-	{4, "Австралия"},
-	{5, "Антарктида"},
+	{0, "Р•РІСЂР°Р·РёСЏ"},
+	{1, "РђС„СЂРёРєР°"},
+	{2, "РЎРµРІРµСЂРЅР°СЏ РђРјРµСЂРёРєР°"},
+	{3, "Р®Р¶РЅР°СЏ РђРјРµСЂРёРєР°"},
+	{4, "РђРІСЃС‚СЂР°Р»РёСЏ"},
+	{5, "РђРЅС‚Р°СЂРєС‚РёРґР°"},
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////								Class "Country"							  /////////////
@@ -63,11 +63,11 @@ public:
 	virtual ~Country() {}
 	void input_info_country()
 	{
-		cout << "Введите название страны, которую хотите добавить:\t"; cin >> country;
+		cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ СЃС‚СЂР°РЅС‹, РєРѕС‚РѕСЂСѓСЋ С…РѕС‚РёС‚Рµ РґРѕР±Р°РІРёС‚СЊ:\t"; cin >> country;
 	}
 	virtual std::ostream& info(std::ostream& os)const
 	{
-		return os << "Страна - " << country << endl;
+		return os << "РЎС‚СЂР°РЅР° - " << country << endl;
 	}
 };
 std::ostream& operator<<(std::ostream os, const Country& obj)
@@ -100,11 +100,11 @@ public:
 	~City() {}
 	void input_info_city()
 	{
-		cout << "Введите название города, который хотите добавить:\t"; cin >> city;
+		cout << "Р’РІРµРґРёС‚Рµ РЅР°Р·РІР°РЅРёРµ РіРѕСЂРѕРґР°, РєРѕС‚РѕСЂС‹Р№ С…РѕС‚РёС‚Рµ РґРѕР±Р°РІРёС‚СЊ:\t"; cin >> city;
 	}
 	std::ostream& info(std::ostream& os)const override
 	{
-		return Country::info(os) << "Город - " << city << endl;
+		return Country::info(os) << "Р“РѕСЂРѕРґ - " << city << endl;
 	}
 };
 std::ostream& operator<<(std::ostream os, const City& obj)
@@ -128,39 +128,39 @@ void main()
 ///////////////////////////////////////////////////////////////////////////////////////////////
 void Menu()
 {
-	cout << "1) Добавление/удаление стран и городов" << endl;
-	cout << "2) Операции подсчёта" << endl;
-	cout << "3) Вывод стран и городов на консоль" << endl;
-	cout << "4) Сохранение, загрузка и удаление в файл" << endl;
-	cout << "5) Выход" << "\n\n";
+	cout << "1) Р”РѕР±Р°РІР»РµРЅРёРµ/СѓРґР°Р»РµРЅРёРµ СЃС‚СЂР°РЅ Рё РіРѕСЂРѕРґРѕРІ" << endl;
+	cout << "2) РћРїРµСЂР°С†РёРё РїРѕРґСЃС‡С‘С‚Р°" << endl;
+	cout << "3) Р’С‹РІРѕРґ СЃС‚СЂР°РЅ Рё РіРѕСЂРѕРґРѕРІ РЅР° РєРѕРЅСЃРѕР»СЊ" << endl;
+	cout << "4) РЎРѕС…СЂР°РЅРµРЅРёРµ, Р·Р°РіСЂСѓР·РєР° Рё СѓРґР°Р»РµРЅРёРµ РІ С„Р°Р№Р»" << endl;
+	cout << "5) Р’С‹С…РѕРґ" << "\n\n";
 }
 void menu_subsection_add_delete()
 {
-	cout << "1) Добавить страну" << endl;
-	cout << "2) Добавить город к стране n" << endl;
-	cout << "3) Удалить страну и все её города" << endl;
-	cout << "4) Удалить город страны \"n\"" << endl;
-	cout << "5) Назад в главное меню" << endl;
+	cout << "1) Р”РѕР±Р°РІРёС‚СЊ СЃС‚СЂР°РЅСѓ" << endl;
+	cout << "2) Р”РѕР±Р°РІРёС‚СЊ РіРѕСЂРѕРґ Рє СЃС‚СЂР°РЅРµ n" << endl;
+	cout << "3) РЈРґР°Р»РёС‚СЊ СЃС‚СЂР°РЅСѓ Рё РІСЃРµ РµС‘ РіРѕСЂРѕРґР°" << endl;
+	cout << "4) РЈРґР°Р»РёС‚СЊ РіРѕСЂРѕРґ СЃС‚СЂР°РЅС‹ \"n\"" << endl;
+	cout << "5) РќР°Р·Р°Рґ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ" << endl;
 }
 void menu_subsection_count()
 {
-	cout << "1) Посчитать все страны, находящиеся в базе данных" << endl;
-	cout << "2) Посчитать все города, находящиеся в базе данных" << endl;
-	cout << "3) Посчитать все города страны \"n\"" << endl;
-	cout << "4) Назад в главное меню" << endl;
+	cout << "1) РџРѕСЃС‡РёС‚Р°С‚СЊ РІСЃРµ СЃС‚СЂР°РЅС‹, РЅР°С…РѕРґСЏС‰РёРµСЃСЏ РІ Р±Р°Р·Рµ РґР°РЅРЅС‹С…" << endl;
+	cout << "2) РџРѕСЃС‡РёС‚Р°С‚СЊ РІСЃРµ РіРѕСЂРѕРґР°, РЅР°С…РѕРґСЏС‰РёРµСЃСЏ РІ Р±Р°Р·Рµ РґР°РЅРЅС‹С…" << endl;
+	cout << "3) РџРѕСЃС‡РёС‚Р°С‚СЊ РІСЃРµ РіРѕСЂРѕРґР° СЃС‚СЂР°РЅС‹ \"n\"" << endl;
+	cout << "4) РќР°Р·Р°Рґ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ" << endl;
 }
 void menu_subsection_display()
 {
-	cout << "1) Отобразить список загруженных стран" << endl;
-	cout << "2) Отобразить список загруженных городов" << endl;
-	cout << "3) Назад в главное меню" << endl;
+	cout << "1) РћС‚РѕР±СЂР°Р·РёС‚СЊ СЃРїРёСЃРѕРє Р·Р°РіСЂСѓР¶РµРЅРЅС‹С… СЃС‚СЂР°РЅ" << endl;
+	cout << "2) РћС‚РѕР±СЂР°Р·РёС‚СЊ СЃРїРёСЃРѕРє Р·Р°РіСЂСѓР¶РµРЅРЅС‹С… РіРѕСЂРѕРґРѕРІ" << endl;
+	cout << "3) РќР°Р·Р°Рґ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ" << endl;
 }
 void menu_subsection_file()
 {
-	cout << "1) Сохранить базу данных в файл" << endl;
-	cout << "2) Загрузить базу данных из файла" << endl;
-	cout << "3) Очистить базу данных" << endl;
-	cout << "4) Назад в главное меню" << endl;
+	cout << "1) РЎРѕС…СЂР°РЅРёС‚СЊ Р±Р°Р·Сѓ РґР°РЅРЅС‹С… РІ С„Р°Р№Р»" << endl;
+	cout << "2) Р—Р°РіСЂСѓР·РёС‚СЊ Р±Р°Р·Сѓ РґР°РЅРЅС‹С… РёР· С„Р°Р№Р»Р°" << endl;
+	cout << "3) РћС‡РёСЃС‚РёС‚СЊ Р±Р°Р·Сѓ РґР°РЅРЅС‹С…" << endl;
+	cout << "4) РќР°Р·Р°Рґ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ" << endl;
 }
 void Call_menu()
 {
@@ -170,14 +170,14 @@ void Call_menu()
 	do
 	{
 		Menu();
-		cout << "Выберите действие:\t"; cin >> menu_select;
+		cout << "Р’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃС‚РІРёРµ:\t"; cin >> menu_select;
 		switch (menu_select)
 		{
 		case 1:
 			do
 			{
 				menu_subsection_add_delete();
-				cout << "\nВыберите действие:\t"; cin >> subsection_select;
+				cout << "\nР’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃС‚РІРёРµ:\t"; cin >> subsection_select;
 				switch (subsection_select)
 				{
 				case 1: add_Country(List_of_countries); break;
@@ -192,7 +192,7 @@ void Call_menu()
 			do
 			{
 				menu_subsection_count();
-				cout << "\nВыберите действие:\t"; cin >> subsection_select;
+				cout << "\nР’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃС‚РІРёРµ:\t"; cin >> subsection_select;
 				switch (subsection_select)
 				{
 				case 1: count_Countries_in_the_database(); break;
@@ -206,7 +206,7 @@ void Call_menu()
 			do
 			{
 				menu_subsection_display();
-				cout << "\nВыберите действие:\t"; cin >> subsection_select;
+				cout << "\nР’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃС‚РІРёРµ:\t"; cin >> subsection_select;
 				switch (subsection_select)
 				{
 				case 1: display_list_of_countries(List_of_countries); break;
@@ -219,7 +219,7 @@ void Call_menu()
 			do
 			{
 				menu_subsection_file();
-				cout << "\nВыберите действие:\t"; cin >> subsection_select;
+				cout << "\nР’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃС‚РІРёРµ:\t"; cin >> subsection_select;
 				switch (subsection_select)
 				{
 				case 1: save_database(); break;
@@ -230,7 +230,7 @@ void Call_menu()
 			} while (subsection_select != 4);
 			break;
 		case 5:
-			cout << "\nРабота завершена" << endl; break;
+			cout << "\nР Р°Р±РѕС‚Р° Р·Р°РІРµСЂС€РµРЅР°" << endl; break;
 		}
 	} while (menu_select != 5);
 }
@@ -239,12 +239,12 @@ void Call_menu()
 ///////////////////////////////////////////////////////////////////////////////////////////////
 void add_Country(std::map<int, std::list<Country>>& List_of_countries)
 {
-	cout << "Выберите континент: " << endl;
+	cout << "Р’С‹Р±РµСЂРёС‚Рµ РєРѕРЅС‚РёРЅРµРЅС‚: " << endl;
 	for (std::map<int, std::string>::const_iterator it = Continent.begin(); it != Continent.end(); ++it)
 		cout << it->first << " - " << it->second << endl;
 	int continent_select;
-	cout << "Введите номер континента: "; cin >> continent_select;
-	if (continent_select > 5)throw std::exception("Выберите значение до 5, включительно");
+	cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РєРѕРЅС‚РёРЅРµРЅС‚Р°: "; cin >> continent_select;
+	if (continent_select > 5)throw std::exception("Р’С‹Р±РµСЂРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РґРѕ 5, РІРєР»СЋС‡РёС‚РµР»СЊРЅРѕ");
 	try
 	{
 		cout << continent_select << " <= 5" << endl;
@@ -260,7 +260,7 @@ void add_Country(std::map<int, std::list<Country>>& List_of_countries)
 	Country country;
 	country.input_info_country();
 	List_of_countries[continent_select].push_back(country);
-	cout << "Страна добавлена в список" << endl;
+	cout << "РЎС‚СЂР°РЅР° РґРѕР±Р°РІР»РµРЅР° РІ СЃРїРёСЃРѕРє" << endl;
 }
 void add_City()
 {
@@ -299,17 +299,17 @@ void display_list_of_countries(std::map<int, std::list<Country>>& List_of_countr
 {
 	if (List_of_countries.empty())
 	{
-		cout << "Вы не внесли в базу данных ни одной страны" << endl;
+		cout << "Р’С‹ РЅРµ РІРЅРµСЃР»Рё РІ Р±Р°Р·Сѓ РґР°РЅРЅС‹С… РЅРё РѕРґРЅРѕР№ СЃС‚СЂР°РЅС‹" << endl;
 	}
 	else
 	{
-		cout << "								Ваш список стран" << endl;
+		cout << "								Р’Р°С€ СЃРїРёСЃРѕРє СЃС‚СЂР°РЅ" << endl;
 		for (std::map<int, std::list<Country>>::const_iterator it = List_of_countries.begin(); it != List_of_countries.end(); ++it)
 		{
 			//cout << it->first << endl;
 			for (std::list<Country>::const_iterator count_country = it->second.begin(); count_country != it->second.end(); ++count_country)
 			{
-				cout << "Страна:\t" << count_country->get_country() << endl;
+				cout << "РЎС‚СЂР°РЅР°:\t" << count_country->get_country() << endl;
 			}
 			cout << delimiter << endl;
 		}
