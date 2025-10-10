@@ -1,4 +1,5 @@
-﻿#include"stdafx.h"
+﻿#include<Windows.h>
+#include"stdafx.h"
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////								Initializations							  /////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +64,10 @@ public:
 	virtual ~Country() {}
 	void input_info_country()
 	{
-		cout << "Введите название страны, которую хотите добавить:\t"; cin >> country;
+		cout << "Введите название страны, которую хотите добавить:\t"; 
+		SetConsoleCP(1251);
+		cin >> country;
+		SetConsoleCP(866);
 	}
 	virtual std::ostream& info(std::ostream& os)const
 	{
@@ -261,7 +265,6 @@ void add_Country(std::map<int, std::list<Country>>& List_of_countries)
 	{
 		cout << "Неизвестная ошибка: что-то пошло не так" << endl;
 	}
-
 }
 void add_City()
 {

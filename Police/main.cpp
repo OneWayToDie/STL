@@ -52,6 +52,11 @@ public:
 		stringtime[strlen(stringtime) - 1] = 0;
 		return stringtime;
 	}
+	time_t get_timestamp()const
+	{
+		tm time_copy = time;
+		return mktime(&time_copy);
+	}
 	void set_violation(int violation)
 	{
 		this->violation = violation;
@@ -78,6 +83,10 @@ public:
 		this->time.tm_hour = parts[3];
 		this->time.tm_min = parts[4];
 	}
+	void set_time(time_t time)
+	{
+		this->time = *localtime(&time);
+	}
 	Crime(int violation, const std::string& place, const std::string& time)
 	{
 		set_violation(violation);
@@ -94,22 +103,25 @@ std::ostream& operator<<(std::ostream& os, const Crime& obj)
 {
 	os.width(32);
 	os << std::left;
-	return os << obj.get_time() << "\t" << VIOLATIONS.at(obj.get_violation()) << "\t" << obj.get_place();
+	return os << obj.get_time() << VIOLATIONS.at(obj.get_violation()) << "\t" << obj.get_place();
 }
 std::ofstream& operator<<(std::ofstream& ofs, const Crime& obj)
 {
-	ofs << obj.get_time() << " " << obj.get_violation() << " " << obj.get_place();
+	ofs  << obj.get_violation() << " " << obj.get_timestamp() << " " << obj.get_place();
 	return ofs;
 }
 std::stringstream& operator>>(std::stringstream& stream, Crime& obj)
 {
 	int violation;
 	stream >> violation;
-	std::string tm_time;
-	stream >> tm_time;
+	time_t time;
+	stream >> time;
+	obj.set_time(time);
+	//std::string tm_time;
+	//stream >> tm_time;
 	std::string place;
 	std::getline(stream, place);
-	obj.set_time(tm_time);
+	//obj.set_time(tm_time);
 	obj.set_violation(violation);
 	obj.set_place(place);
 	return stream;
