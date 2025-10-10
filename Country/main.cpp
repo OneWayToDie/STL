@@ -239,28 +239,29 @@ void Call_menu()
 ///////////////////////////////////////////////////////////////////////////////////////////////
 void add_Country(std::map<int, std::list<Country>>& List_of_countries)
 {
-	cout << "Выберите континент: " << endl;
-	for (std::map<int, std::string>::const_iterator it = Continent.begin(); it != Continent.end(); ++it)
-		cout << it->first << " - " << it->second << endl;
-	int continent_select;
-	cout << "Введите номер континента: "; cin >> continent_select;
-	if (continent_select > 5)throw std::exception("Выберите значение до 5, включительно");
 	try
 	{
-		cout << continent_select << " <= 5" << endl;
+		cout << "Выберите континент: " << endl;
+		for (std::map<int, std::string>::const_iterator it = Continent.begin(); it != Continent.end(); ++it)
+			cout << it->first << " - " << it->second << endl;
+		int continent_select;
+		cout << "Введите номер континента: "; cin >> continent_select;
+		if (continent_select > 5 || continent_select < 0)
+			throw std::out_of_range("Сбой программы, выберите значение от 0 до 5 включительно!!!");
+		Country country;
+		country.input_info_country();
+		List_of_countries[continent_select].push_back(country);
+		cout << "Страна добавлена в список" << endl;
 	}
 	catch (const std::exception& ex)
 	{
-		std::cerr << "Exception:\t";
+		std::cerr << "Ошибка:\t" << ex.what() << endl;
 	}
 	catch (...)
 	{
-		cout << "Error: something went wrong" << endl;
+		cout << "Неизвестная ошибка: что-то пошло не так" << endl;
 	}
-	Country country;
-	country.input_info_country();
-	List_of_countries[continent_select].push_back(country);
-	cout << "Страна добавлена в список" << endl;
+
 }
 void add_City()
 {
