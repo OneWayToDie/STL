@@ -3,10 +3,13 @@
 #include<map>
 #include<string>
 #include<fstream>
-#include <list>
+#include<list>
+#include<vector>
+#include<Windows.h>
 using std::cin;
 using std::cout;
 using std::endl;
 
 #define delimiter "\n--------------------------------------\n"
 #define tab "\t"
+#define auxiliary
