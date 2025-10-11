@@ -4,7 +4,6 @@
 #include<string>
 #include<fstream>
 #include<list>
-#include<vector>
 #include<Windows.h>
 using std::cin;
 using std::cout;

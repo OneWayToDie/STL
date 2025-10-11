@@ -7,6 +7,10 @@ class City;
 const std::map<int, std::list<Country>> List_of_countries;
 const std::map<int, std::list<City>> List_of_city;
 void Menu();
+void menu_subsection_add_delete();
+void menu_subsection_count();
+void menu_subsection_display();
+void menu_subsection_file();
 void Call_menu();
 void add_Country(std::map<int, std::list<Country>>& List_of_countries);
 void add_City(std::map<int, std::list<City>>& List_of_city, std::map<int, std::list<Country>>& List_of_countries);
@@ -26,6 +30,7 @@ Country sub_add_country();
 City sub_add_city();
 bool findCountries(const std::map<int, std::list<Country>>& List_of_countries);
 int selectContinent();
+std::string getInputWithSpaces();
 #endif // auxilary
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////							not key XDDD = continent					  /////////////
@@ -73,7 +78,7 @@ public:
 	{
 		cout << "Введите название страны, которую хотите добавить:\t"; 
 		SetConsoleCP(1251);
-		cin >> country;
+		country = getInputWithSpaces();
 		SetConsoleCP(866);
 	}
 	virtual std::ostream& info(std::ostream& os)const
@@ -113,7 +118,7 @@ public:
 	{
 		cout << "Введите название города, который хотите добавить:\t"; 
 		SetConsoleCP(1251);
-		cin >> city;
+		city = getInputWithSpaces();
 		SetConsoleCP(866);
 	}
 	std::ostream& info(std::ostream& os)const override
@@ -151,16 +156,16 @@ void Menu()
 void menu_subsection_add_delete()
 {
 	cout << "1) Добавить страну" << endl;
-	cout << "2) Добавить город к стране n" << endl;
+	cout << "2) Добавить город" << endl;
 	cout << "3) Удалить страну и все её города" << endl;
-	cout << "4) Удалить город страны \"n\"" << endl;
+	cout << "4) Удалить город выбранной нами страны" << endl;
 	cout << "5) Назад в главное меню" << endl;
 }
 void menu_subsection_count()
 {
 	cout << "1) Посчитать все страны, находящиеся в базе данных" << endl;
 	cout << "2) Посчитать все города, находящиеся в базе данных" << endl;
-	cout << "3) Посчитать все города страны \"n\"" << endl;
+	cout << "3) Посчитать все города выбранной нами страны" << endl;
 	cout << "4) Назад в главное меню" << endl;
 }
 void menu_subsection_display()
@@ -270,9 +275,13 @@ void add_City(std::map<int, std::list<City>>& List_of_city, std::map<int, std::l
 		//и приравниваем его функции sub_add_city, которая возвращает название города
 	{
 		cout << "Мдааа... мрачновато тут у вас, давайте добавим страну и город в вашу поросшую мхом базу данных" << endl;
-		add_Country(List_of_countries);
+		int continent_select = selectContinent();
+		Country country = sub_add_country();
+		List_of_countries[continent_select].push_back(country);
 		City city = sub_add_city();
+		List_of_city[continent_select].push_back(city);
 		cout << "Город добавлен в список" << endl;
+		return;
 	}
 	if (!findCountries(List_of_countries))	//Если наша база данных не пуста, то мы выбираем и проверяем континент на наличие в нём стран через вынесенную функцию select_continent,
 		//и дальше вносим страну и город(если их не было на этом континенте);
@@ -283,16 +292,53 @@ void add_City(std::map<int, std::list<City>>& List_of_city, std::map<int, std::l
 		if (continent_iterator == List_of_countries.end() || continent_iterator->second.empty())
 		{
 			cout << "На выбранном вами континенте нет стран. Добавьте новую страну и город" << endl;
+			//add_Country(List_of_countries);
+			//int continent_select = selectContinent();
 			Country country = sub_add_country();
+			List_of_countries[continent_select].push_back(country);
 			City city = sub_add_city();
+			List_of_city[continent_select].push_back(city);
 			cout << "Город добавлен в список" << endl;
 		}
 		else	//Нужен если у нас не пустая база данных, и на выбранном континенте будет страна
 		{
-
+			cout << "\nСтраны на континенте " << Continent.at(continent_select) << ":" << endl; /*Continent[continent_select] Не захотел перегружать квадратные скобки*/
+			std::list<Country>::const_iterator country_iterator;
+			int count = 0; //счётчик для нумерации стран
+			for (country_iterator = continent_iterator->second.begin();
+				country_iterator != continent_iterator->second.end();
+				++country_iterator)	// цикл для прохода стран на континенте
+			{
+				cout << count << " - " << country_iterator->get_country() << endl;
+				count++;
+			}
+			cout << count << " - [ДОБАВИТЬ НОВУЮ СТРАНУ]" << endl;	//Функция добавления новой страны, если у нас нет нужной страны в списке, для нашего города
+			int country_select;
+			cout << "Выберите номер страны:\t"; cin >> country_select;
+			if (country_select == count)	//Если была выбрана опция - добавить новую страну
+			{
+				Country country = sub_add_country();	
+				List_of_countries[continent_select].push_back(country);
+				City city = sub_add_city();
+				city.set_country(country.get_country());
+				List_of_city[continent_select].push_back(city);
+				cout << "Новая страна и город добавлены в список" << endl;
+			}
+			else if (country_select >= 0 && country_select < count)
+			{
+				std::list<Country>::const_iterator selected_country_iterator =
+					continent_iterator->second.begin();	//Находим необходимую нам страну
+				for (int i = 0; i < country_select; i++)
+				{
+					++selected_country_iterator;
+				}
+				City city = sub_add_city();	//Добавляем в неё город
+				city.set_country(selected_country_iterator->get_country()); //Назначаем городу страну
+				List_of_city[continent_select].push_back(city);
+				cout << "Город добавлен в список" << endl;
+			}
 		}
 	}
-
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////							Auxiliary_Functions							  /////////////
@@ -321,6 +367,13 @@ City sub_add_city()	//Вынос части функции add_city для бо�
 	City city;
 	city.input_info_city();
 	return city;
+}
+std::string getInputWithSpaces()	//Писал не сам, в интернете высмотрел эту функцию
+{
+	std::string input;
+	std::cin.ignore(1000, '\n');	//Игнорирует до 1000 символов
+	std::getline(std::cin, input);
+	return input;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////							Delete_Functions							  /////////////
