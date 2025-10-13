@@ -20,7 +20,7 @@ void count_Countries_in_the_database();
 void count_Cities_in_the_database();
 void count_Cities_of_the_country_n();
 void display_list_of_countries(std::map<int, std::list<Country>>& List_of_countries);
-void display_list_of_cities();
+void display_list_of_cities(std::map<int, std::list<City>>& List_of_city);
 void save_database();
 void load_database();
 void clear_database();
@@ -64,15 +64,6 @@ public:
 		set_country(country);
 	}
 	Country(const std::string& country) :country(country) {}
-	Country(const Country& other) : country(other.country) {}
-	const Country& operator=(const Country& other)
-	{
-		if (this != &other)
-		{
-			this->country = other.country;
-		}
-		return *this;
-	}
 	virtual ~Country() {}
 	void input_info_country()
 	{
@@ -107,7 +98,7 @@ public:
 	}
 	City()
 	{
-		set_country(city);
+		set_city(city);
 	}
 	City(const std::string country, const std::string city) :Country(country)
 	{
@@ -234,7 +225,7 @@ void Call_menu()
 				switch (subsection_select)
 				{
 				case 1: display_list_of_countries(List_of_countries); break;
-				case 2: display_list_of_cities(); break;
+				case 2: display_list_of_cities(List_of_city); break;
 				case 3: break;
 				}
 			} while (subsection_select != 3);
@@ -268,6 +259,7 @@ void add_Country(std::map<int, std::list<Country>>& List_of_countries)
 	//в которой итератором прохожусь по континенту и возвращаю его
 	List_of_countries[continent_select].push_back(sub_add_country());	//в выбранном континенте создаю страну
 	cout << "Страна добавлена в список" << endl;
+	system("CLS");
 }
 void add_City(std::map<int, std::list<City>>& List_of_city, std::map<int, std::list<Country>>& List_of_countries)
 {
@@ -281,7 +273,7 @@ void add_City(std::map<int, std::list<City>>& List_of_city, std::map<int, std::l
 		City city = sub_add_city();
 		List_of_city[continent_select].push_back(city);
 		cout << "Город добавлен в список" << endl;
-		return;
+		system("CLS");
 	}
 	if (!findCountries(List_of_countries))	//Если наша база данных не пуста, то мы выбираем и проверяем континент на наличие в нём стран через вынесенную функцию select_continent,
 		//и дальше вносим страну и город(если их не было на этом континенте);
@@ -291,14 +283,13 @@ void add_City(std::map<int, std::list<City>>& List_of_city, std::map<int, std::l
 		//вовзращает итератор на найденный элемент, если не найдёт - вернёт end();
 		if (continent_iterator == List_of_countries.end() || continent_iterator->second.empty())
 		{
-			cout << "На выбранном вами континенте нет стран. Добавьте новую страну и город" << endl;
-			//add_Country(List_of_countries);
-			//int continent_select = selectContinent();
+			cout << "На выбранном вами континенте, нет стран. Добавьте новую страну и город" << endl;
 			Country country = sub_add_country();
 			List_of_countries[continent_select].push_back(country);
 			City city = sub_add_city();
 			List_of_city[continent_select].push_back(city);
 			cout << "Город добавлен в список" << endl;
+			system("CLS");
 		}
 		else	//Нужен если у нас не пустая база данных, и на выбранном континенте будет страна
 		{
@@ -312,19 +303,20 @@ void add_City(std::map<int, std::list<City>>& List_of_city, std::map<int, std::l
 				cout << count << " - " << country_iterator->get_country() << endl;
 				count++;
 			}
-			cout << count << " - [ДОБАВИТЬ НОВУЮ СТРАНУ]" << endl;	//Функция добавления новой страны, если у нас нет нужной страны в списке, для нашего города
+			cout << count << " - Добавить страну" << endl;	//Функция добавления новой страны, если у нас нет нужной страны в списке, для нашего города
 			int country_select;
 			cout << "Выберите номер страны:\t"; cin >> country_select;
 			if (country_select == count)	//Если была выбрана опция - добавить новую страну
 			{
 				Country country = sub_add_country();	
 				List_of_countries[continent_select].push_back(country);
-				City city = sub_add_city();
+				City city = sub_add_city();	//Создаём новый город, вводим его через функцию
 				city.set_country(country.get_country());
 				List_of_city[continent_select].push_back(city);
 				cout << "Новая страна и город добавлены в список" << endl;
+				system("CLS");
 			}
-			else if (country_select >= 0 && country_select < count)
+			else if (country_select >= 0 && country_select < count)	//Если выбираем страну из заполненного нами списка
 			{
 				std::list<Country>::const_iterator selected_country_iterator =
 					continent_iterator->second.begin();	//Находим необходимую нам страну
@@ -336,7 +328,9 @@ void add_City(std::map<int, std::list<City>>& List_of_city, std::map<int, std::l
 				city.set_country(selected_country_iterator->get_country()); //Назначаем городу страну
 				List_of_city[continent_select].push_back(city);
 				cout << "Город добавлен в список" << endl;
+				system("CLS");
 			}
+			
 		}
 	}
 }
@@ -355,23 +349,24 @@ int selectContinent()	//Функция для прохода итераторо�
 Country sub_add_country()	//Вынос части функции add_country для более компактного написания функции
 {
 	Country country;
-	country.input_info_country();
+	country.input_info_country(); //функция с написанием информации о стране
 	return country;
 }
 bool findCountries(const std::map<int, std::list<Country>>& List_of_countries)	//Функция для проверки наличия стран в базе
 {
-	return List_of_countries.empty();
+	return List_of_countries.empty();	//проверка на наличие городов
 }
 City sub_add_city()	//Вынос части функции add_city для более компактного написания функции
 {
 	City city;
-	city.input_info_city();
+	city.input_info_city();	//функция с написанием информации о городе
 	return city;
 }
 std::string getInputWithSpaces()	//Писал не сам, в интернете высмотрел эту функцию
 {
 	std::string input;
-	std::cin.ignore(1000, '\n');	//Игнорирует до 1000 символов
+	std::cin.ignore(1000, '\n');	//Очищает буффер и игнорирует до 1000 символов, 
+	//останавливается при "\n", это нужно чтобы убрать предыдущий \n, оставшийся в буфере после предыдущего ввода
 	std::getline(std::cin, input);
 	return input;
 }
@@ -424,9 +419,25 @@ void display_list_of_countries(std::map<int, std::list<Country>>& List_of_countr
 		}
 	}
 }
-void display_list_of_cities()
+void display_list_of_cities(std::map<int, std::list<City>>& List_of_city)
 {
-
+	if (List_of_city.empty())
+	{
+		cout << "Вы не внесли в базу данных ни одного города" << endl;
+	}
+	else
+	{
+		cout << "								Ваш список городов" << endl;
+		for (std::map<int, std::list<City>>::const_iterator it = List_of_city.begin(); it != List_of_city.end(); ++it)
+		{
+			//cout << it->first << endl;
+			for (std::list<City>::const_iterator count_city = it->second.begin(); count_city != it->second.end(); ++count_city)
+			{
+				cout << "Город:\t" << count_city->get_city() << endl;
+			}
+			cout << delimiter << endl;
+		}
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////								Save/Load/Clear							  /////////////
